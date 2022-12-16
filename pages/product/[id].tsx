@@ -25,14 +25,12 @@ export default Product
 export async function getStaticProps() {
     // Call an external API endpoint to get posts.
     // You can use any data fetching library
-    const res = await fetch('https://.../posts')
-    const posts = await res.json();
 
     // By returning { props: { posts } }, the Blog component
     // will receive `posts` as a prop at build time
     return {
         props: {
-            posts,
+            foo: [1, 2, 3]
         },
         revalidate: 10, // In seconds
     }
@@ -40,8 +38,6 @@ export async function getStaticProps() {
 
 export async function getStaticPaths() {
 
-    const res = await fetch('https://.../posts');
-    const posts = await res.json();
 
     // Get the paths we want to pre-render based on posts
     const paths = [1, 2, 3, 4, 5, 6, 7, 8];
