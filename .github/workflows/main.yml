@@ -1,0 +1,29 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      GITHUB_ENV_PATH: $GITHUB_ENV
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Determine Environment
+        id: determine_environment
+        run: echo "ENVIRONMENT=$(basename $GITHUB_ENV_PATH .json)" >> $GITHUB_ENV
+
+      - name: Deploy
+        run: |
+          echo "Deploying to $ENVIRONMENT..."
+          # Comandos de deploy usando as variáveis de ambiente AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY
